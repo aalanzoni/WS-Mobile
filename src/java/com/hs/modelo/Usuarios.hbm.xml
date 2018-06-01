@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28/05/2018 17:37:42 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.hs.modelo.Usuarios" table="usuarios" schema="dbo" catalog="Test" optimistic-lock="version">
+        <id name="idUsu" type="int">
+            <column name="id_usu" />
+            <generator class="identity" />
+        </id>
+        <property name="nombreUsu" type="string">
+            <column name="nombre_usu" length="100" />
+        </property>
+        <property name="apellidoUsu" type="string">
+            <column name="apellido_usu" length="100" />
+        </property>
+        <property name="dniUsu" type="java.lang.Long">
+            <column name="dni_usu" precision="12" scale="0" />
+        </property>
+        <property name="passUsu" type="string">
+            <column name="pass_usu" length="30" />
+        </property>
+        <property name="mailUsu" type="string">
+            <column name="mail_usu" length="40" />
+        </property>
+        <property name="direccionUsu" type="string">
+            <column name="direccion_usu" length="100" />
+        </property>
+        <property name="entreCalle1Usu" type="string">
+            <column name="entre_calle_1_usu" length="100" />
+        </property>
+        <property name="entreCalle2Usu" type="string">
+            <column name="entre_calle_2_usu" length="100" />
+        </property>
+        <property name="numeroUsu" type="java.lang.Integer">
+            <column name="numero_usu" />
+        </property>
+        <property name="pisoUsu" type="java.lang.Integer">
+            <column name="piso_usu" />
+        </property>
+        <property name="departamentoUsu" type="string">
+            <column name="departamento_usu" length="5" />
+        </property>
+        <property name="localidadUsu" type="string">
+            <column name="localidad_usu" length="100" />
+        </property>
+        <property name="codposUsu" type="java.lang.Integer">
+            <column name="codpos_usu" />
+        </property>
+        <property name="ultimoAccesoUsu" type="timestamp">
+            <column name="ultimo_acceso_usu" length="23" />
+        </property>
+    </class>
+</hibernate-mapping>
