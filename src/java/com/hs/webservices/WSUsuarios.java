@@ -49,7 +49,8 @@ public class WSUsuarios {
             logger.info("¿Todo bien?");
         }
         catch(Exception e){
-            e.printStackTrace();
+            //e.printStackTrace();
+            logger.throwing("WSUsuarios", "hello", e);
         }
         
         //logger.warn("cabeza de foco","lalala",txt);
@@ -74,9 +75,10 @@ public class WSUsuarios {
         try {
             parametros = (JSONObject) parser.parse(param);
         } catch (ParseException pe) {
+            logger.throwing("WSUsuarios", "insertarUsuario", pe);
             obj.put("salida", 9);
             obj.put("msg", "ERROR - No parsea a JSON los parametros de entrada");
-            pe.printStackTrace();
+            //pe.printStackTrace();
             return obj.toString();
         }
 
@@ -93,7 +95,8 @@ public class WSUsuarios {
             try {
                 dni = new Long(dniS);
             } catch (NumberFormatException nfe) {
-                nfe.printStackTrace();
+                logger.throwing("WSUsuarios", "insertarUsuario", nfe);
+                //nfe.printStackTrace();
                 obj.put("salida", 9);
                 obj.put("msg", "ERROR - No se parsea a Long el DNI");
                 return obj.toString();
@@ -143,7 +146,8 @@ public class WSUsuarios {
             try {
                 nro = new Integer(nroS);
             } catch (NumberFormatException nfe) {
-                nfe.printStackTrace();
+                logger.throwing("WSUsuarios", "insertarUsuario", nfe);
+                //nfe.printStackTrace();
                 obj.put("salida", 9);
                 obj.put("msg", "ERROR - Al parsear altura de calle a Integer (numero_usu)");
                 return obj.toString();
@@ -157,7 +161,8 @@ public class WSUsuarios {
             try {
                 piso = new Integer(pisoS);
             } catch (NumberFormatException nfe) {
-                nfe.printStackTrace();
+                logger.throwing("WSUsuarios", "insertarUsuario", nfe);
+                //nfe.printStackTrace();
                 obj.put("salida", 9);
                 obj.put("msg", "ERROR - Al parsear el Piso a Integer (piso_usu)");
                 return obj.toString();
@@ -179,7 +184,8 @@ public class WSUsuarios {
             try {
                 cp = new Integer(cpS);
             } catch (NumberFormatException nfe) {
-                nfe.printStackTrace();
+                logger.throwing("WSUsuarios", "insertarUsuario", nfe);
+                //nfe.printStackTrace();
                 obj.put("salida", 9);
                 obj.put("msg", "ERROR - Al parsear el Codigo Postal a Integer (codpos_usu)");
                 return obj.toString();
@@ -190,7 +196,8 @@ public class WSUsuarios {
         try {
             us.insertarUsuario(usuario);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.throwing("WSUsuarios", "insertarUsuario", e);
+            //e.printStackTrace();
             obj.put("salida", 9);
             obj.put("msg", "ERROR - Al Insertar Usuario en DB");
             return obj.toString();
@@ -216,9 +223,10 @@ public class WSUsuarios {
         try {
             parametros = (JSONObject) parser.parse(param);
         } catch (ParseException pe) {
+            logger.throwing("WSUsuarios", "validaUsuario", pe);
             obj.put("salida", 9);
             obj.put("msg", "ERROR - No parsea a JSON los parametros de entrada");
-            pe.printStackTrace();
+            //pe.printStackTrace();
             return obj.toString();
         }
 
@@ -240,7 +248,8 @@ public class WSUsuarios {
         try {
             dniUsu = new Long(dniS);
         } catch (NumberFormatException nfe) {
-            nfe.printStackTrace();
+            logger.throwing("WSUsuarios", "validaUsuario", nfe);
+            //nfe.printStackTrace();
             obj.put("salida", 9);
             obj.put("msg", "ERROR - No se parsea a Long el DNI");
             return obj.toString();
@@ -253,7 +262,8 @@ public class WSUsuarios {
         try {
             usuario = us.getUsuarioDNI(dniUsu);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.throwing("WSUsuarios", "validaUsuario", e);
+            //e.printStackTrace();
             obj.put("salida", 9);
             obj.put("msg", "ERROR - Al buscar en DB el usuario por DNI");
             return obj.toString();
@@ -306,9 +316,10 @@ public class WSUsuarios {
         try {
             parametros = (JSONObject) parser.parse(param);
         } catch (ParseException pe) {
+            logger.throwing("WSUsuarios", "eliminarUsuario", pe);
             obj.put("salida", 9);
             obj.put("msg", "ERROR - No parsea a JSON los parametros de entrada");
-            pe.printStackTrace();
+            //pe.printStackTrace();
             return obj.toString();
         }
 
@@ -323,7 +334,8 @@ public class WSUsuarios {
         try {
             dniUsu = new Long(dniS);
         } catch (NumberFormatException nfe) {
-            nfe.printStackTrace();
+            logger.throwing("WSUsuarios", "eliminarUsuario", nfe);
+            //nfe.printStackTrace();
             obj.put("salida", 9);
             obj.put("msg", "ERROR - No se parsea a Long el DNI");
             return obj.toString();
@@ -335,7 +347,8 @@ public class WSUsuarios {
         try {
             usuario = us.getUsuarioDNI(dniUsu);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.throwing("WSUsuarios", "eliminarUsuario", e);
+            //e.printStackTrace();
             obj.put("salida", 9);
             obj.put("msg", "ERROR - Al buscar en DB el usuario por DNI");
             return obj.toString();
@@ -347,7 +360,8 @@ public class WSUsuarios {
                 obj.put("salida", 1);
                 obj.put("msg", "ERROR - Al Eliminar el Usuario");                
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.throwing("WSUsuarios", "eliminarUsuario", e);
+                //e.printStackTrace();
                 obj.put("salida", 9);
                 obj.put("msg", "ERROR - Al Eliminar el Usuario");
                 return obj.toString();
@@ -374,9 +388,10 @@ public class WSUsuarios {
         try {
             parametros = (JSONObject) parser.parse(parameter);
         } catch (ParseException pe) {
+            logger.throwing("WSUsuarios", "modificarUsuario", pe);
             obj.put("salida", 9);
             obj.put("msg", "ERROR - No parsea a JSON los parametros de entrada");
-            pe.printStackTrace();
+            //pe.printStackTrace();
             return obj.toString();
         }
 
@@ -393,7 +408,8 @@ public class WSUsuarios {
             try {
                 dniUsu = new Long(dniS);
             } catch (NumberFormatException nfe) {
-                nfe.printStackTrace();
+                logger.throwing("WSUsuarios", "modificarUsuario", nfe);
+                //nfe.printStackTrace();
                 obj.put("salida", 9);
                 obj.put("msg", "ERROR - No se parsea a Long el DNI");
                 return obj.toString();
@@ -407,7 +423,8 @@ public class WSUsuarios {
         try {
             usuario = us.getUsuarioDNI(dniUsu);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.throwing("WSUsuarios", "modificarUsuario", e);
+            //e.printStackTrace();
             obj.put("salida", 9);
             obj.put("msg", "ERROR - Al buscar en DB el usuario por DNI");
             return obj.toString();
@@ -447,7 +464,8 @@ public class WSUsuarios {
                 usuario.setNumeroUsu(nro);
             }
             catch(NumberFormatException nfe){
-                nfe.printStackTrace();
+                logger.throwing("WSUsuarios", "modificarUsuario", nfe);
+                //nfe.printStackTrace();
                 obj.put("salida", 9);
                 obj.put("msg", "ERROR - No se parsea a Integer el Nro");
             }
@@ -460,7 +478,8 @@ public class WSUsuarios {
                 usuario.setPisoUsu(piso);
             }
             catch(NumberFormatException nfe){
-                nfe.printStackTrace();
+                logger.throwing("WSUsuarios", "modificarUsuario", nfe);
+                //nfe.printStackTrace();
                 obj.put("salida", 9);
                 obj.put("msg", "ERROR - No se parsea a Integer el Piso");
             }
@@ -479,7 +498,8 @@ public class WSUsuarios {
                 usuario.setCodposUsu(cp);
             }
             catch(NumberFormatException nfe){
-                nfe.printStackTrace();
+                logger.throwing("WSUsuarios", "modificarUsuario", nfe);
+                //nfe.printStackTrace();
                 obj.put("salida", 9);
                 obj.put("msg", "ERROR - No se parsea a Integer el Codigo Postal");
             }
