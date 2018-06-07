@@ -10,6 +10,7 @@ import com.hs.conexion.UsuariosDAOImp;
 import com.hs.modelo.Usuarios;
 import com.hs.util.Configuracion;
 import java.util.logging.FileHandler;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import javax.jws.WebService;
@@ -27,14 +28,18 @@ import org.json.simple.parser.ParseException;
  */
 @WebService(serviceName = "WSUsuarios")
 public class WSUsuarios {
+    
+    WSLogger logger = new WSLogger();
 
-     Logger logger = Logger.getLogger("MyLog");
-     Configuracion config = new Configuracion();
+     //Logger logger = Logger.getLogger("MyLog");
+     //Configuracion config = new Configuracion();
      
 
     /**
      * This is a sample web service operation
      */
+    
+    /*
     @WebMethod(operationName = "hello")
     public String hello(@WebParam(name = "name") String txt) {
         
@@ -57,6 +62,7 @@ public class WSUsuarios {
         //log.debug("Temperature set to {}. Old temperature was {}.", "hello!", txt);
         return "Hello " + txt + " !";
     }
+    */
 
     /**
      * Web service operation
@@ -75,7 +81,7 @@ public class WSUsuarios {
         try {
             parametros = (JSONObject) parser.parse(param);
         } catch (ParseException pe) {
-            logger.throwing("WSUsuarios", "insertarUsuario", pe);
+            logger.WriteLog("WSUsuarios", "insertarUsuario", pe, Level.SEVERE);
             obj.put("salida", 9);
             obj.put("msg", "ERROR - No parsea a JSON los parametros de entrada");
             //pe.printStackTrace();
@@ -95,7 +101,7 @@ public class WSUsuarios {
             try {
                 dni = new Long(dniS);
             } catch (NumberFormatException nfe) {
-                logger.throwing("WSUsuarios", "insertarUsuario", nfe);
+                logger.WriteLog("WSUsuarios", "insertarUsuario", nfe, Level.SEVERE);
                 //nfe.printStackTrace();
                 obj.put("salida", 9);
                 obj.put("msg", "ERROR - No se parsea a Long el DNI");
@@ -146,7 +152,7 @@ public class WSUsuarios {
             try {
                 nro = new Integer(nroS);
             } catch (NumberFormatException nfe) {
-                logger.throwing("WSUsuarios", "insertarUsuario", nfe);
+                logger.WriteLog("WSUsuarios", "insertarUsuario", nfe, Level.SEVERE);
                 //nfe.printStackTrace();
                 obj.put("salida", 9);
                 obj.put("msg", "ERROR - Al parsear altura de calle a Integer (numero_usu)");
@@ -161,7 +167,7 @@ public class WSUsuarios {
             try {
                 piso = new Integer(pisoS);
             } catch (NumberFormatException nfe) {
-                logger.throwing("WSUsuarios", "insertarUsuario", nfe);
+                logger.WriteLog("WSUsuarios", "insertarUsuario", nfe, Level.SEVERE);
                 //nfe.printStackTrace();
                 obj.put("salida", 9);
                 obj.put("msg", "ERROR - Al parsear el Piso a Integer (piso_usu)");
@@ -184,7 +190,7 @@ public class WSUsuarios {
             try {
                 cp = new Integer(cpS);
             } catch (NumberFormatException nfe) {
-                logger.throwing("WSUsuarios", "insertarUsuario", nfe);
+                logger.WriteLog("WSUsuarios", "insertarUsuario", nfe, Level.SEVERE);
                 //nfe.printStackTrace();
                 obj.put("salida", 9);
                 obj.put("msg", "ERROR - Al parsear el Codigo Postal a Integer (codpos_usu)");
@@ -196,7 +202,7 @@ public class WSUsuarios {
         try {
             us.insertarUsuario(usuario);
         } catch (Exception e) {
-            logger.throwing("WSUsuarios", "insertarUsuario", e);
+            logger.WriteLog("WSUsuarios", "insertarUsuario", e, Level.SEVERE);
             //e.printStackTrace();
             obj.put("salida", 9);
             obj.put("msg", "ERROR - Al Insertar Usuario en DB");
@@ -223,7 +229,7 @@ public class WSUsuarios {
         try {
             parametros = (JSONObject) parser.parse(param);
         } catch (ParseException pe) {
-            logger.throwing("WSUsuarios", "validaUsuario", pe);
+            logger.WriteLog("WSUsuarios", "validaUsuario", pe, Level.SEVERE);
             obj.put("salida", 9);
             obj.put("msg", "ERROR - No parsea a JSON los parametros de entrada");
             //pe.printStackTrace();
@@ -248,7 +254,7 @@ public class WSUsuarios {
         try {
             dniUsu = new Long(dniS);
         } catch (NumberFormatException nfe) {
-            logger.throwing("WSUsuarios", "validaUsuario", nfe);
+            logger.WriteLog("WSUsuarios", "validaUsuario", nfe, Level.SEVERE);
             //nfe.printStackTrace();
             obj.put("salida", 9);
             obj.put("msg", "ERROR - No se parsea a Long el DNI");
@@ -262,7 +268,7 @@ public class WSUsuarios {
         try {
             usuario = us.getUsuarioDNI(dniUsu);
         } catch (Exception e) {
-            logger.throwing("WSUsuarios", "validaUsuario", e);
+            logger.WriteLog("WSUsuarios", "validaUsuario", e, Level.SEVERE);
             //e.printStackTrace();
             obj.put("salida", 9);
             obj.put("msg", "ERROR - Al buscar en DB el usuario por DNI");
@@ -316,7 +322,7 @@ public class WSUsuarios {
         try {
             parametros = (JSONObject) parser.parse(param);
         } catch (ParseException pe) {
-            logger.throwing("WSUsuarios", "eliminarUsuario", pe);
+            logger.WriteLog("WSUsuarios", "eliminarUsuario", pe, Level.SEVERE);
             obj.put("salida", 9);
             obj.put("msg", "ERROR - No parsea a JSON los parametros de entrada");
             //pe.printStackTrace();
@@ -334,7 +340,7 @@ public class WSUsuarios {
         try {
             dniUsu = new Long(dniS);
         } catch (NumberFormatException nfe) {
-            logger.throwing("WSUsuarios", "eliminarUsuario", nfe);
+            logger.WriteLog("WSUsuarios", "eliminarUsuario", nfe, Level.SEVERE);
             //nfe.printStackTrace();
             obj.put("salida", 9);
             obj.put("msg", "ERROR - No se parsea a Long el DNI");
@@ -347,7 +353,7 @@ public class WSUsuarios {
         try {
             usuario = us.getUsuarioDNI(dniUsu);
         } catch (Exception e) {
-            logger.throwing("WSUsuarios", "eliminarUsuario", e);
+            logger.WriteLog("WSUsuarios", "eliminarUsuario", e, Level.SEVERE);
             //e.printStackTrace();
             obj.put("salida", 9);
             obj.put("msg", "ERROR - Al buscar en DB el usuario por DNI");
@@ -360,7 +366,7 @@ public class WSUsuarios {
                 obj.put("salida", 1);
                 obj.put("msg", "ERROR - Al Eliminar el Usuario");                
             } catch (Exception e) {
-                logger.throwing("WSUsuarios", "eliminarUsuario", e);
+                logger.WriteLog("WSUsuarios", "eliminarUsuario", e, Level.SEVERE);
                 //e.printStackTrace();
                 obj.put("salida", 9);
                 obj.put("msg", "ERROR - Al Eliminar el Usuario");
@@ -388,7 +394,7 @@ public class WSUsuarios {
         try {
             parametros = (JSONObject) parser.parse(parameter);
         } catch (ParseException pe) {
-            logger.throwing("WSUsuarios", "modificarUsuario", pe);
+            logger.WriteLog("WSUsuarios", "modificarUsuario", pe, Level.SEVERE);
             obj.put("salida", 9);
             obj.put("msg", "ERROR - No parsea a JSON los parametros de entrada");
             //pe.printStackTrace();
@@ -408,7 +414,7 @@ public class WSUsuarios {
             try {
                 dniUsu = new Long(dniS);
             } catch (NumberFormatException nfe) {
-                logger.throwing("WSUsuarios", "modificarUsuario", nfe);
+                logger.WriteLog("WSUsuarios", "modificarUsuario", nfe, Level.SEVERE);
                 //nfe.printStackTrace();
                 obj.put("salida", 9);
                 obj.put("msg", "ERROR - No se parsea a Long el DNI");
@@ -423,7 +429,7 @@ public class WSUsuarios {
         try {
             usuario = us.getUsuarioDNI(dniUsu);
         } catch (Exception e) {
-            logger.throwing("WSUsuarios", "modificarUsuario", e);
+            logger.WriteLog("WSUsuarios", "modificarUsuario", e, Level.SEVERE);
             //e.printStackTrace();
             obj.put("salida", 9);
             obj.put("msg", "ERROR - Al buscar en DB el usuario por DNI");
@@ -464,7 +470,7 @@ public class WSUsuarios {
                 usuario.setNumeroUsu(nro);
             }
             catch(NumberFormatException nfe){
-                logger.throwing("WSUsuarios", "modificarUsuario", nfe);
+                logger.WriteLog("WSUsuarios", "modificarUsuario", nfe, Level.SEVERE);
                 //nfe.printStackTrace();
                 obj.put("salida", 9);
                 obj.put("msg", "ERROR - No se parsea a Integer el Nro");
@@ -478,7 +484,7 @@ public class WSUsuarios {
                 usuario.setPisoUsu(piso);
             }
             catch(NumberFormatException nfe){
-                logger.throwing("WSUsuarios", "modificarUsuario", nfe);
+                logger.WriteLog("WSUsuarios", "modificarUsuario", nfe, Level.SEVERE);
                 //nfe.printStackTrace();
                 obj.put("salida", 9);
                 obj.put("msg", "ERROR - No se parsea a Integer el Piso");
@@ -498,7 +504,7 @@ public class WSUsuarios {
                 usuario.setCodposUsu(cp);
             }
             catch(NumberFormatException nfe){
-                logger.throwing("WSUsuarios", "modificarUsuario", nfe);
+                logger.WriteLog("WSUsuarios", "modificarUsuario", nfe, Level.SEVERE);
                 //nfe.printStackTrace();
                 obj.put("salida", 9);
                 obj.put("msg", "ERROR - No se parsea a Integer el Codigo Postal");

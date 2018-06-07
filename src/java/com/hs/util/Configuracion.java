@@ -14,7 +14,7 @@ public class Configuracion {
     public Configuracion() {
         super();
         //Configuracion.setConfCliente("\\Configuracion.ini");
-        Configuracion.setConfCliente("D:\\Proyectos\\NetBeans\\WS-Mobile\\Configuracion.ini");
+        Configuracion.setConfCliente("C:\\Users\\usuario\\Documents\\GitHub\\WS-Mobile\\Configuracion.ini");
 //        Path currentRelativePath = Paths.get("");
 //        String s = currentRelativePath.toAbsolutePath().toString();
 //        System.out.println("Current relative path is: " + s);
