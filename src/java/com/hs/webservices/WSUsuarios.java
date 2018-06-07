@@ -7,25 +7,19 @@ package com.hs.webservices;
 
 import com.hs.conexion.UsuariosDAO;
 import com.hs.conexion.UsuariosDAOImp;
-import com.hs.logger.MyFilter;
-import com.hs.logger.MyFormatter;
-import com.hs.logger.MyHandler;
 import com.hs.modelo.Usuarios;
 import com.hs.util.Configuracion;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
-import java.util.logging.Handler;
-import java.util.logging.Level;
-import java.util.logging.LogManager;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+
+
 
 /**
  *
@@ -34,36 +28,32 @@ import org.json.simple.parser.ParseException;
 @WebService(serviceName = "WSUsuarios")
 public class WSUsuarios {
 
-    static Logger logger = Logger.getLogger(WSUsuarios.class.getName());
+     Logger logger = Logger.getLogger("MyLog");
+     Configuracion config = new Configuracion();
+     
 
     /**
      * This is a sample web service operation
      */
     @WebMethod(operationName = "hello")
     public String hello(@WebParam(name = "name") String txt) {
-        try {
-            LogManager.getLogManager().readConfiguration(new FileInputStream("mylogging.properties"));
-        } catch (SecurityException | IOException e1) {
-            e1.printStackTrace();
+        
+        FileHandler fh;
+        try{
+            System.out.println("ruta del Log:"+config.getLog());
+            fh = new FileHandler(config.getLog(), true); 
+            logger.addHandler(fh);
+            SimpleFormatter formatter = new SimpleFormatter();  
+            fh.setFormatter(formatter);  
+            logger.info("Primera prueba");
+            logger.info("¿Todo bien?");
         }
-
-        logger.setLevel(Level.FINE);
-        logger.addHandler(new ConsoleHandler());
-        //adding custom handler
-        logger.addHandler(new MyHandler());
-        try {
-            //FileHandler file name with max size and number of log files limit
-            Handler fileHandler = new FileHandler(Configuracion.getLog() + "Log.log", 2000, 5);
-            fileHandler.setFormatter(new MyFormatter());
-            //setting custom filter for FileHandler
-            fileHandler.setFilter(new MyFilter());
-            logger.addHandler(fileHandler);
-
-            logger.log(Level.SEVERE, "Operacion Hola");
-        } catch (SecurityException | IOException e) {
+        catch(Exception e){
             e.printStackTrace();
         }
-
+        
+        //logger.warn("cabeza de foco","lalala",txt);
+        //log.debug("Temperature set to {}. Old temperature was {}.", "hello!", txt);
         return "Hello " + txt + " !";
     }
 
@@ -94,7 +84,7 @@ public class WSUsuarios {
 
         Usuarios usuario = new Usuarios();
 
-        System.out.println("JSON : -->  /n" + parametros);
+        //System.out.println("JSON : -->  /n" + parametros);
 
         Long dni = new Long("0");
 
@@ -429,31 +419,78 @@ public class WSUsuarios {
             return obj.toString();
         }
 
+        if((String)obj.get("nombre_usu")!= null)
+            usuario.setNombreUsu((String)obj.get("nombre_usu"));
+
+        if((String)obj.get("apellido_usu")!= null)
+            usuario.setNombreUsu((String)obj.get("apellido_usu"));
         
-
-        obj.put("nombre_usu", usuario.getNombreUsu());
-        obj.put("apellido_usu", usuario.getApellidoUsu());
-        obj.put("dni_usu", usuario.getDniUsu());
-        obj.put("pass_usu", usuario.getPassUsu());
-        obj.put("mail_usu", usuario.getMailUsu());
-        obj.put("direccion_usu", usuario.getDireccionUsu());
-        obj.put("entre_calle_1_usu", usuario.getEntreCalle1Usu());
-        obj.put("entre_calle_2_usu", usuario.getEntreCalle2Usu());
-        obj.put("numero_usu", usuario.getNumeroUsu());
-        obj.put("piso_usu", usuario.getPisoUsu());
-        obj.put("departamento_usu", usuario.getDepartamentoUsu());
-        obj.put("localidad_usu", usuario.getLocalidadUsu());
-        obj.put("codpos_usu", usuario.getCodposUsu());
-
-            salida = obj.toString();
-
-            System.out.println("JSON: " + obj);
-            System.out.println("JSON String: " + salida);
-
-
-        return salida;        
+        if((String)obj.get("pass_uss")!= null)
+            usuario.setPassUsu((String)obj.get("pass_uss"));
         
+        if((String)obj.get("mail_usu")!= null)
+            usuario.setMailUsu((String)obj.get("mail_usu"));
+        
+        if((String)obj.get("direccion_usu")!= null)
+            usuario.setDireccionUsu((String)obj.get("direccion_usu"));
 
+        if((String)obj.get("entre_calle_1_usu")!= null)
+            usuario.setEntreCalle1Usu((String)obj.get("entre_calle_1_usu"));
+
+        if((String)obj.get("entre_calle_2_usu")!= null)
+            usuario.setEntreCalle2Usu((String)obj.get("entre_calle_2_usu"));
+
+        String nroS = (String)obj.get("numero_usu");
+        if(nroS != null){
+            try{
+                Integer nro = new Integer(nroS);
+                usuario.setNumeroUsu(nro);
+            }
+            catch(NumberFormatException nfe){
+                nfe.printStackTrace();
+                obj.put("salida", 9);
+                obj.put("msg", "ERROR - No se parsea a Integer el Nro");
+            }
+        }
+        
+        String pisoS = (String)obj.get("piso_usu");
+        if(pisoS != null){
+            try{
+                Integer piso = new Integer(pisoS);
+                usuario.setPisoUsu(piso);
+            }
+            catch(NumberFormatException nfe){
+                nfe.printStackTrace();
+                obj.put("salida", 9);
+                obj.put("msg", "ERROR - No se parsea a Integer el Piso");
+            }
+        }
+        
+        if((String)obj.get("departamento_usu")!= null)
+            usuario.setDepartamentoUsu((String)obj.get("departamento_usu"));
+        
+        if((String)obj.get("localidad_usu")!= null)
+            usuario.setLocalidadUsu((String)obj.get("localidad_usu"));
+        
+        String cpS = (String)obj.get("codpos_usu");
+        if(cpS != null){
+            try{
+                Integer cp = new Integer(cpS);
+                usuario.setCodposUsu(cp);
+            }
+            catch(NumberFormatException nfe){
+                nfe.printStackTrace();
+                obj.put("salida", 9);
+                obj.put("msg", "ERROR - No se parsea a Integer el Codigo Postal");
+            }
+        }        
+        
+        salida = obj.toString();
+
+        System.out.println("JSON: " + obj);
+        System.out.println("JSON String: " + salida);
+
+        return salida;
     }
 
     

@@ -1,5 +1,8 @@
 package com.hs.util;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 public class Configuracion {
     //VARIABLES DE LA CLASE
     private static String ip = "";
@@ -10,7 +13,11 @@ public class Configuracion {
 
     public Configuracion() {
         super();
-        Configuracion.setConfCliente("./Configuracion.ini");
+        //Configuracion.setConfCliente("\\Configuracion.ini");
+        Configuracion.setConfCliente("D:\\Proyectos\\NetBeans\\WS-Mobile\\Configuracion.ini");
+//        Path currentRelativePath = Paths.get("");
+//        String s = currentRelativePath.toAbsolutePath().toString();
+//        System.out.println("Current relative path is: " + s);
     }
     
     
@@ -52,12 +59,10 @@ public class Configuracion {
             nameFile = "./Configuracion.ini";
         }
         IniFile ini = new IniFile(nameFile);
-        ip = ini.getParameters("ip");
+        ip = ini.getParameters("ip");        
         imagenes = ini.getParameters("imagenes");
         baseBackup = ini.getParameters("baseBackup");
         reportes = ini.getParameters("reportes");
         log = ini.getParameters("log");
-
-
     }
 }
